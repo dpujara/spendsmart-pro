@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">SpendSmart</string>
+    <string name="welcome_spendsmart_image">SpendSmart Image</string>
+    <string name="spendsmart">SpendSmart</string>
+    <string name="welcome_contact_us"><u>Contact us</u></string>
+    <string name="welcome_privacy_policy"><u>Privacy Policy</u> |</string>
+    <string name="welcome_terms"><u>Terms</u> |</string>
+    <string name="welcome_sign_up">Sign up</string>
+    <string name="welcome_log_in">Log In</string>
+    <string name="button_done">Done</string>
+    <string name="button_back">Back</string>
+    <string name="text_forgot_your_password"><u>Forgot your Password?</u></string>
+    <string name="text_term_condition"><u>By singing up, you accept the Spendsmart Terms of Services.</u></string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="email_address">Email</string>
+    <string name="fullname">Full Name</string>
+    <string name="reset_your_password">Reset your password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="reset_password_info">Enter your email address and we\'ll send you a link to reset your password
+    </string>
+</resources>

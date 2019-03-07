@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+         xmlns:app="http://schemas.android.com/apk/res-auto"
+         xmlns:tools="http://schemas.android.com/tools"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:background="@color/white"
+         tools:context="com.pujara.dhaval.spendsmart.welcome.fragments.WelcomeFragment">
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.55" />
+
+    <ImageView
+            android:id="@+id/imageViewLogo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:contentDescription="@string/welcome_spendsmart_image"
+            android:scaleType="fitEnd"
+            app:layout_constraintBottom_toTopOf="@+id/guideline"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline3"
+            app:srcCompat="@drawable/spendsmart" />
+
+    <TextView
+            android:id="@+id/textView_welcome_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:gravity="center_horizontal"
+            android:text="@string/spendsmart"
+            android:textAppearance="@style/TextAppearance.Spend.Title"
+            android:textSize="@dimen/_24sdp"
+            app:layout_constraintEnd_toEndOf="@+id/imageViewLogo"
+            app:layout_constraintStart_toStartOf="@+id/imageViewLogo"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewLogo"/>
+
+    <Button
+            android:id="@+id/button_welcome_login"
+            style="@style/Widget.Spend.Button.Gray"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/welcome_log_in"
+            app:layout_constraintBottom_toTopOf="@+id/button_welcome_signup"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+            android:id="@+id/button_welcome_signup"
+            style="@style/Widget.Spend.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/welcome_sign_up"
+            app:layout_constraintBottom_toTopOf="@+id/button_welcom_google"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    <com.shobhitpuri.custombuttons.GoogleSignInButton
+            android:id="@+id/button_welcom_google"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/google_sign_in"
+            android:textSize="18sp"
+            app:isDarkTheme="false"
+            app:layout_constraintBottom_toTopOf="@+id/textView_welcome_terms"
+            app:layout_constraintEnd_toEndOf="@+id/button_welcome_signup"
+            app:layout_constraintStart_toStartOf="@+id/button_welcome_signup" />
+
+    <TextView
+            android:id="@+id/textView_welcome_terms"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/welcome_terms"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView_welcome_privacy"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/button_welcom_google" />
+
+    <TextView
+            android:id="@+id/textView_welcome_privacy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/welcome_privacy_policy"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView_welcome_contactus"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView_welcome_terms" />
+
+    <TextView
+            android:id="@+id/textView_welcome_contactus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:text="@string/welcome_contact_us"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/button_welcom_google"
+            app:layout_constraintStart_toEndOf="@+id/textView_welcome_privacy" />
+
+    <android.support.constraint.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.15" />
+
+</android.support.constraint.ConstraintLayout>
