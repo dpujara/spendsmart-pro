@@ -4,9 +4,13 @@ import com.google.firebase.auth.FirebaseUser
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
 import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
+import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeBottomView
 import java.lang.Exception
 
 class Event:IEvent {
+    override fun onFeedbackResult(iWelcomeBottomView: IWelcomeBottomView, result: Boolean) {
+        iWelcomeBottomView.onFeedbackResult(result)
+    }
 
     override fun onSignUpSuccess(
         user: String?,

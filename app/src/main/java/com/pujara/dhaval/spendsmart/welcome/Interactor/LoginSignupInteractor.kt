@@ -10,9 +10,11 @@ import com.pujara.dhaval.spendsmart.welcome.model.User
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
 import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
+import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeBottomView
 
 class LoginSignupInteractor : ILoginSignupInteractor{
-    private val TAG = LoginSignupInteractor::class.java.getName()
+
+    private val TAG = LoginSignupInteractor::class.java.name
     private var mFirebaseAuth = FirebaseAuth.getInstance()
     private var event = Event()
     private lateinit var database: DatabaseReference
@@ -42,7 +44,7 @@ class LoginSignupInteractor : ILoginSignupInteractor{
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
-                    val user : String? = mFirebaseAuth.getCurrentUser()?.uid
+                    val user : String? = mFirebaseAuth.currentUser?.uid
                     database = FirebaseDatabase.getInstance().reference
                     val userData = User(email,password)
                     userData.name = name
@@ -66,7 +68,7 @@ class LoginSignupInteractor : ILoginSignupInteractor{
             .addOnCompleteListener{ task ->
                 if(task.isSuccessful){
                     Log.d(TAG, "signInWithEmail:success")
-                    val user :FirebaseUser? = mFirebaseAuth.getCurrentUser()
+                    val user :FirebaseUser? = mFirebaseAuth.currentUser
                     event.onSignInSuccess(user,iLoginView)
                 }
                 else{
@@ -75,5 +77,27 @@ class LoginSignupInteractor : ILoginSignupInteractor{
                     event.onSignInFailure(iLoginView,errorMessage)
                 }
             }
+    }
+
+    override fun submitFeedback(
+        email: String,
+        subject: String,
+        description: String,
+        iWelcomeBottomView1: IWelcomeBottomView
+    ) {
+        val feedback = HashMap<String, Any>()
+        feedback["email"] = email
+        feedback["description"] = description
+        feedback["subject"] = subject
+        feedback["responded"] = "No"
+        database = FirebaseDatabase.getInstance().reference
+        database.child("root").child("feedback").push().setValue(feedback).addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                event.onFeedbackResult(iWelcomeBottomView1,true)
+            }
+            else{
+                event.onFeedbackResult(iWelcomeBottomView1,false)
+            }
+        }
     }
 }

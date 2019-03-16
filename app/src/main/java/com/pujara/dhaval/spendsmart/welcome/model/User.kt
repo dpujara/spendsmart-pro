@@ -5,6 +5,8 @@ import android.util.Patterns
 
 class User(override var email: String, override val password: String) : IUser {
     override var name: String = ""
+    override var stringValidation:String = ""
+
     override val isUsernameEmpty: Boolean
         get() = TextUtils.isEmpty(email)
     override val isUsernameValid: Boolean
@@ -13,4 +15,7 @@ class User(override var email: String, override val password: String) : IUser {
         get() =  password.length < 6
     override val isNameEmpty : Boolean
         get() = TextUtils.isEmpty(name)
+
+    override val isStringEmpty : Boolean
+        get() = TextUtils.isEmpty(stringValidation)
 }

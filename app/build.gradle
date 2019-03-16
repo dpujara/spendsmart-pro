@@ -46,7 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:16.1.0'
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-storage:16.1.0'
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.2.0'
 
     //Material Design Dependency
     api 'com.android.support:design:28.0.0'
@@ -54,6 +54,12 @@ dependencies {
     //External Dependecncies
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.shobhitpuri.custombuttons:google-signin:1.0.0'
+
+
+    //Retrofit dependencies
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

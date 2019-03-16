@@ -28,8 +28,6 @@ class LoginFragment : Fragment(),ILoginView {
     var snackbar : Snackbar? = null
 
     override fun onSignInSuccess(user: FirebaseUser?) {
-//        snackbar  = view?.let { Snackbar.make(it,"Successfully Logged in !!!",Snackbar.LENGTH_LONG) }
-//        snackbar?.show()
         fragmentManager?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         (activity as NavigationHost).navigateTo(SliderFragment(),false,true,R.anim.slide_in_bottom, R.anim.fade_out,0,0)
     }
@@ -40,11 +38,11 @@ class LoginFragment : Fragment(),ILoginView {
     }
 
     override fun showProgress() {
-        view?.progressBar?.visibility = View.VISIBLE
+
     }
 
     override fun hideProgress() {
-        view?.progressBar?.visibility = View.GONE
+
     }
 
     override fun disableInput() {

@@ -36,11 +36,11 @@ class SignUpFragment : Fragment(),ISignupView {
         editText.setCompoundDrawablesWithIntrinsicBounds(0,0,drawable,0)
     }
     override fun showProgress() {
-        view?.progressBar?.visibility = View.VISIBLE
+
     }
 
     override fun hideProgress() {
-        view?.progressBar?.visibility = View.GONE
+
     }
 
     override fun enableInput() {

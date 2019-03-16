@@ -21,17 +21,26 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIcon="@drawable/ic_action_back"
-            app:title="Help" />
+            app:title="Help"/>
+            <ProgressBar
+                    android:id="@+id/progress_appbar_contactus"
+                    android:layout_marginTop="-7dp"
+                    android:layout_marginBottom="-7dp"
+                    android:visibility="gone"
+                    android:indeterminate="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal" />
     </android.support.design.widget.AppBarLayout>
 
     <ScrollView android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/contact_us_scrollview"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:layout_marginTop="?android:attr/actionBarSize">
         <LinearLayout
-                android:id="@+id/forgot_password_rootContainer"
+                android:id="@+id/contact_us_rootContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -109,7 +118,7 @@
                     android:layout_height="wrap_content">
 
                 <android.support.design.button.MaterialButton
-                        android:id="@+id/reset_password_button_login"
+                        android:id="@+id/send_feedback_button_contact_us"
                         style="@style/Widget.Spend.Button"
                         android:layout_centerHorizontal="true"
                         android:layout_width="wrap_content"
@@ -118,4 +127,5 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+    <include layout="@layout/progressbar"/>
 </FrameLayout>

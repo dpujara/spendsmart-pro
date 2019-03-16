@@ -5,8 +5,10 @@ import com.pujara.dhaval.spendsmart.welcome.Interactor.LoginSignupInteractor
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
 import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
+import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeBottomView
 
 class LoginSignup : ILoginSignup , ILoginSignupInteractor{
+
     var loginSignupInteractor = LoginSignupInteractor()
 
     override fun forgotPassword(
@@ -35,5 +37,14 @@ class LoginSignup : ILoginSignup , ILoginSignupInteractor{
         iLoginView: ILoginView
     ) {
         loginSignupInteractor.doSignIn(email, password, iLoginView)
+    }
+
+    override fun submitFeedback(
+        email: String,
+        subject: String,
+        description: String,
+        iWelcomeBottomView1: IWelcomeBottomView
+    ) {
+        loginSignupInteractor.submitFeedback(email,subject,description,iWelcomeBottomView1)
     }
 }

@@ -3,6 +3,7 @@ package com.pujara.dhaval.spendsmart.welcome.Interactor
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
 import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
+import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeBottomView
 
 interface ILoginSignupInteractor{
     fun doSignup(
@@ -21,4 +22,6 @@ interface ILoginSignupInteractor{
         email: String,
         iForgotpasswordView: IForgotpasswordView
     )
+
+    fun submitFeedback(email: String, subject: String, description: String, iWelcomeBottomView1: IWelcomeBottomView)
 }

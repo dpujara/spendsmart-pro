@@ -8,4 +8,6 @@ interface IUser {
     val isUsernameEmpty: Boolean
     val isUsernameValid : Boolean
     val isNameEmpty:Boolean
+    val isStringEmpty: Boolean
+    var stringValidation: String
 }
