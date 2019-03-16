@@ -1,13 +1,14 @@
 package com.pujara.dhaval.spendsmart.welcome.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 
 import android.support.v4.app.Fragment
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import com.pujara.dhaval.spendsmart.NavigationHost
 import com.pujara.dhaval.spendsmart.R
 import com.pujara.dhaval.spendsmart.welcome.presenter.forgotpassword.Forgotpasswordpresenter
@@ -27,6 +28,8 @@ class ForgotPasswordFragment : Fragment(), IForgotpasswordView {
         snackbar  = view?.let { Snackbar.make(it,message, Snackbar.LENGTH_LONG) }
         snackbar?.show()
         view?.edittext_username_forgot_password?.text = null
+        view?.edittext_username_forgot_password?.clearFocus()
+        hideSoftKeyboard(view)
     }
 
     override fun onPasswordFailure(message: String) {
@@ -52,5 +55,10 @@ class ForgotPasswordFragment : Fragment(), IForgotpasswordView {
         view.reset_password_button_login.setOnClickListener { forgotpasswordpresenter.onResetButtonClick(view.edittext_username_forgot_password.text.toString()) }
 
         view.app_bar_forgot.setNavigationOnClickListener { forgotpasswordpresenter.onBackNavigationClicked() }
+    }
+
+    private fun hideSoftKeyboard(view: View?) {
+        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view?.windowToken, 0)
     }
 }

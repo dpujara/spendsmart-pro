@@ -4,6 +4,7 @@ import com.pujara.dhaval.spendsmart.welcome.Interactor.ILoginSignupInteractor
 import com.pujara.dhaval.spendsmart.welcome.Interactor.LoginSignupInteractor
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
+import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
 
 class LoginSignup : ILoginSignup , ILoginSignupInteractor{
     var loginSignupInteractor = LoginSignupInteractor()
@@ -19,8 +20,13 @@ class LoginSignup : ILoginSignup , ILoginSignupInteractor{
 
     }
 
-    override fun doSignup(email: String, password: String) {
-        loginSignupInteractor.doSignup(email,password)
+    override fun doSignup(
+        email: String,
+        password: String,
+        name: String,
+        iSignupView: ISignupView
+    ) {
+        loginSignupInteractor.doSignup(email, password, name, iSignupView)
     }
 
     override fun doSignIn(

@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,8 +28,10 @@ class LoginFragment : Fragment(),ILoginView {
     var snackbar : Snackbar? = null
 
     override fun onSignInSuccess(user: FirebaseUser?) {
-        snackbar  = view?.let { Snackbar.make(it,"Successfully Logged in !!!",Snackbar.LENGTH_LONG) }
-        snackbar?.show()
+//        snackbar  = view?.let { Snackbar.make(it,"Successfully Logged in !!!",Snackbar.LENGTH_LONG) }
+//        snackbar?.show()
+        fragmentManager?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        (activity as NavigationHost).navigateTo(SliderFragment(),false,true,R.anim.slide_in_bottom, R.anim.fade_out,0,0)
     }
 
     override fun onSignInFailure(exception: String?) {
@@ -80,7 +83,10 @@ class LoginFragment : Fragment(),ILoginView {
             loginPresenter.onBackButtonClicked()
         }
 
-        done_button_login.setOnClickListener { loginPresenter.onLogin(edittext_username_login.text.toString(),edittext_password_login.text.toString()) }
+        done_button_login.setOnClickListener {
+            hideSoftKeyboard(view)
+            loginPresenter.onLogin(edittext_username_login.text.toString(),edittext_password_login.text.toString())
+        }
 
         textViewForgotPassword.setOnClickListener { loginPresenter.onForgotPasswordClicked()  }
     }

@@ -3,10 +3,11 @@ package com.pujara.dhaval.spendsmart.welcome.event
 import com.google.firebase.auth.FirebaseUser
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
+import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
 import java.lang.Exception
 
 interface IEvent {
-    fun onSignUpSuccess(user: FirebaseUser?)
+    fun onSignUpSuccess(user: String?, iSignupView: ISignupView)
     fun onSignUpFailure(exception: Exception?)
     fun onSignInSuccess(
         user: FirebaseUser?,

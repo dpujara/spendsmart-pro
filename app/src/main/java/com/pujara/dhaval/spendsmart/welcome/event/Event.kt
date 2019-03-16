@@ -3,11 +3,16 @@ package com.pujara.dhaval.spendsmart.welcome.event
 import com.google.firebase.auth.FirebaseUser
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
+import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
 import java.lang.Exception
 
 class Event:IEvent {
 
-    override fun onSignUpSuccess(user: FirebaseUser?) {
+    override fun onSignUpSuccess(
+        user: String?,
+        iSignupView: ISignupView
+    ) {
+        iSignupView.onSignUpResult("Successfully Signed up !!!")
     }
 
     override fun onSignUpFailure(exception: Exception?) {

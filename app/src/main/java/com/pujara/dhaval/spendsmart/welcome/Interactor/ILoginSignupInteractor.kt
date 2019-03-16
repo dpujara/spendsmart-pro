@@ -2,9 +2,15 @@ package com.pujara.dhaval.spendsmart.welcome.Interactor
 
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
+import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
 
 interface ILoginSignupInteractor{
-    fun doSignup(email:String,password:String)
+    fun doSignup(
+        email: String,
+        password: String,
+        name: String,
+        iSignupView: ISignupView
+    )
     fun doSignIn(
         email: String,
         password: String,

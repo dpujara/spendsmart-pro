@@ -19,4 +19,14 @@
     <string name="reset_password">Reset Password</string>
     <string name="reset_password_info">Enter your email address and we\'ll send you a link to reset your password
     </string>
+    <string name="add_expenses">Add Expenses</string>
+    <string name="add_bill">Add Bill</string>
+    <string name="get_started">Let\'s get started!</string>
+    <string name="tap_to_begin">Tap Anywhere to begin.</string>
+    <string name="pay_back">Pay your friends back anytime</string>
+    <string name="settle_up">Settle Up</string>
+    <string name="contact_us_info">Please enter your details and We will get back to you.</string>
+    <string name="contact_us_subject">Subject</string>
+    <string name="contact_us_feedback">Feedback</string>
+    <string name="send_feedback">Send Feedback</string>
 </resources>

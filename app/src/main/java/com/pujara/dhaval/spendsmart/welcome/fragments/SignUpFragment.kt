@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -51,8 +52,10 @@ class SignUpFragment : Fragment(),ISignupView {
     }
 
     override fun onSignUpResult(message: String) {
-        val snackbar : Snackbar? = view?.let { Snackbar.make(it,message, Snackbar.LENGTH_LONG) }
-        snackbar?.show()
+        setInputs(true)
+        hideProgress()
+        fragmentManager?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        (activity as NavigationHost).navigateTo(SliderFragment(),false,true,R.anim.slide_in_bottom, R.anim.fade_out,R.anim.fade_in,R.anim.fade_out)
     }
 
     override fun navigateToWelcomeFragment() {
@@ -75,6 +78,7 @@ class SignUpFragment : Fragment(),ISignupView {
         }
 
         view.done_button_signup.setOnClickListener {
+            showProgress()
             signupPresenter.registerNewUser(signup_edittext_name.text.toString(), signup_edittext_email.text.toString(),signup_edittext_password.text.toString())
         }
 
