@@ -22,11 +22,21 @@ import android.text.Editable
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ProgressBar
 import com.pujara.dhaval.spendsmart.R
 
 class SignUpFragment : Fragment(),ISignupView {
+    override fun onSignUpError(message: String) {
+        hideProgress()
+        displayError(message)
+    }
 
+    fun displayError(message: String) {
+        val snackbar : Snackbar? = view?.let { Snackbar.make(it,message,Snackbar.LENGTH_LONG) }
+        snackbar?.show()
+    }
     private lateinit var signupPresenter: ISignupPresenter
+    private var progressBar : ProgressBar? = null
 
     override fun emptyEdittext(editText: EditText) {
         editText.text = null
@@ -35,12 +45,13 @@ class SignUpFragment : Fragment(),ISignupView {
     override fun setEditTextDrawable(drawable: Int,editText: EditText) {
         editText.setCompoundDrawablesWithIntrinsicBounds(0,0,drawable,0)
     }
-    override fun showProgress() {
 
+    override fun showProgress() {
+        progressBar?.visibility = View.VISIBLE
     }
 
     override fun hideProgress() {
-
+        progressBar?.visibility = View.INVISIBLE
     }
 
     override fun enableInput() {
@@ -65,6 +76,7 @@ class SignUpFragment : Fragment(),ISignupView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.signup_fragment, container, false)
         signupPresenter = SignupPresenter(this)
+        progressBar = view.findViewById(R.id.progress_appbar_signup)
         return view
     }
 

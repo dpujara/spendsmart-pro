@@ -9,7 +9,10 @@ import java.lang.Exception
 
 interface IEvent {
     fun onSignUpSuccess(user: String?, iSignupView: ISignupView)
-    fun onSignUpFailure(exception: Exception?)
+    fun onSignUpFailure(
+        exception: Exception?,
+        iSignupView: ISignupView
+    )
     fun onSignInSuccess(
         user: FirebaseUser?,
         iLoginView: ILoginView

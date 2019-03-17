@@ -8,6 +8,7 @@
         android:background="@color/white"
         android:fillViewport="true"
         tools:context="com.pujara.dhaval.spendsmart.welcome.fragments.LoginFragment">
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -16,6 +17,15 @@
             android:orientation="vertical"
             android:padding="@dimen/_24sdp"
             android:paddingTop="@dimen/_16sdp">
+        <ProgressBar
+                android:id="@+id/progress_appbar_login"
+                android:layout_marginTop="-7dp"
+                android:layout_marginBottom="-7dp"
+                android:visibility="invisible"
+                android:indeterminate="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal" />
 
         <TextView
                 android:layout_width="wrap_content"
@@ -92,6 +102,5 @@
                     android:layout_toStartOf="@id/done_button_login"
                     android:text="@string/button_back"/>
         </RelativeLayout>
-
     </LinearLayout>
 </ScrollView>

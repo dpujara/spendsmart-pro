@@ -1,11 +1,8 @@
 package com.pujara.dhaval.spendsmart.welcome.model
 
-import com.pujara.dhaval.spendsmart.welcome.Interactor.ILoginSignupInteractor
-import com.pujara.dhaval.spendsmart.welcome.Interactor.LoginSignupInteractor
-import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
-import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
-import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
-import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeBottomView
+import com.pujara.dhaval.spendsmart.welcome.interactor.ILoginSignupInteractor
+import com.pujara.dhaval.spendsmart.welcome.interactor.LoginSignupInteractor
+import com.pujara.dhaval.spendsmart.welcome.view.*
 
 class LoginSignup : ILoginSignup , ILoginSignupInteractor{
 

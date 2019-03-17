@@ -11,4 +11,5 @@ interface ISignupView {
     fun disableInput()
     fun setEditTextDrawable(drawable:Int,editText: EditText)
     fun emptyEdittext(editText: EditText)
+    abstract fun onSignUpError(message: String)
 }

@@ -1,4 +1,4 @@
-package com.pujara.dhaval.spendsmart.welcome.Interactor
+package com.pujara.dhaval.spendsmart.welcome.interactor
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -6,7 +6,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.pujara.dhaval.spendsmart.welcome.event.Event
-import com.pujara.dhaval.spendsmart.welcome.model.User
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
 import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
@@ -32,28 +31,24 @@ class LoginSignupInteractor : ILoginSignupInteractor{
             }
     }
 
-    override fun doSignup(
-        email: String,
-        password: String,
-        name: String,
-        iSignupView: ISignupView
-    ) {
-
+    override fun doSignup(email: String,password: String,name: String,iSignupView: ISignupView) {
         mFirebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
                     val user : String? = mFirebaseAuth.currentUser?.uid
                     database = FirebaseDatabase.getInstance().reference
-                    val userData = User(email,password)
-                    userData.name = name
+                    val userData = HashMap<String, Any>()
+                    userData["email"] = email
+                    userData["password"] = password
+                    userData["name"] = name
+
                     if (user != null) {
                         database.child("root").child("users").child(user).setValue(userData)
                         event.onSignUpSuccess(user,iSignupView)
                     }
                 } else {
-                    // If sign in fails, display a message to the user.
+                    event.onSignUpFailure(task.exception,iSignupView)
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                 }
             }
@@ -79,12 +74,7 @@ class LoginSignupInteractor : ILoginSignupInteractor{
             }
     }
 
-    override fun submitFeedback(
-        email: String,
-        subject: String,
-        description: String,
-        iWelcomeBottomView1: IWelcomeBottomView
-    ) {
+    override fun submitFeedback(email: String, subject: String, description: String, iWelcomeBottomView1: IWelcomeBottomView) {
         val feedback = HashMap<String, Any>()
         feedback["email"] = email
         feedback["description"] = description

@@ -17,9 +17,6 @@ import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeBottomView
 import kotlinx.android.synthetic.main.contactus_welcome_fragment.view.*
 import android.widget.FrameLayout
 import android.view.animation.AlphaAnimation
-import kotlinx.android.synthetic.main.contactus_welcome_fragment.*
-
-
 
 
 class ContactUsFragment : Fragment(),IWelcomeBottomView {
@@ -31,7 +28,7 @@ class ContactUsFragment : Fragment(),IWelcomeBottomView {
     private var progressBar : ProgressBar? = null
 
     override fun onFeedbackResult(result: Boolean) {
-        hideProgrssbar()
+        hideProgressbar()
         if(result){
             emptyEditText()
             clearFocus()
@@ -56,7 +53,7 @@ class ContactUsFragment : Fragment(),IWelcomeBottomView {
     }
 
     override fun displayError(error: String) {
-        hideProgrssbar()
+        hideProgressbar()
         snackbar  = view?.let { Snackbar.make(it,error, Snackbar.LENGTH_LONG) }
         snackbar?.show()
     }
@@ -97,7 +94,7 @@ class ContactUsFragment : Fragment(),IWelcomeBottomView {
         progressBar?.visibility = View.VISIBLE
     }
 
-    private fun hideProgrssbar(){
+    private fun hideProgressbar(){
         outAnimation = AlphaAnimation(1f, 0f)
         outAnimation?.duration = 200
         progressBarHolder?.animation = outAnimation

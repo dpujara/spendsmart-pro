@@ -1,9 +1,6 @@
 package com.pujara.dhaval.spendsmart.welcome.model
 
-import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
-import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
-import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
-import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeBottomView
+import com.pujara.dhaval.spendsmart.welcome.view.*
 
 interface ILoginSignup {
     fun checkSession()

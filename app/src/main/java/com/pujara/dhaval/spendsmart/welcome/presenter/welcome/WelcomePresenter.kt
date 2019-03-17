@@ -1,9 +1,16 @@
 package com.pujara.dhaval.spendsmart.welcome.presenter.welcome
 
+import android.support.v4.app.FragmentActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.pujara.dhaval.spendsmart.welcome.model.LoginSignup
 import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeView
 
-class WelcomePresenter(internal var iWelcomeView: IWelcomeView):
+class WelcomePresenter(private var iWelcomeView: IWelcomeView):
     IWelcomePresenter {
+    override fun onGoogleSignInClicked(activity: FragmentActivity?) {
+
+    }
+
     override fun onTermTextviewClicked() {
         iWelcomeView.navigateToTermsFragment()
     }
@@ -23,5 +30,4 @@ class WelcomePresenter(internal var iWelcomeView: IWelcomeView):
     override fun onSignUpButtonClicked() {
         iWelcomeView.navigateToSignUpFragment()
     }
-
 }

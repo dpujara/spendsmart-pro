@@ -19,7 +19,13 @@ class Event:IEvent {
         iSignupView.onSignUpResult("Successfully Signed up !!!")
     }
 
-    override fun onSignUpFailure(exception: Exception?) {
+    override fun onSignUpFailure(
+        exception: Exception?,
+        iSignupView: ISignupView
+    ) {
+        if (exception != null) {
+            exception.message?.let { iSignupView.onSignUpError(it) }
+        }
     }
 
     override fun onSignInSuccess(user: FirebaseUser?,iLoginView: ILoginView) {

@@ -1,5 +1,6 @@
 package com.pujara.dhaval.spendsmart
 
+import android.app.Activity
 import android.support.v4.app.Fragment
 
 interface NavigationHost {
@@ -17,4 +18,6 @@ interface NavigationHost {
         animation3: Int,
         animation4: Int
     )
+
+    fun newActivity(dashboardActivity: Activity)
 }

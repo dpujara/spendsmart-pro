@@ -1,11 +1,14 @@
 package com.pujara.dhaval.spendsmart.welcome.fragments
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.ViewPager
 import android.util.Log
-import android.util.Log.d
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +17,13 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.pujara.dhaval.spendsmart.NavigationHost
 import com.pujara.dhaval.spendsmart.R
+import com.pujara.dhaval.spendsmart.dashboard.DashboardActivity
 import com.pujara.dhaval.spendsmart.welcome.adapter.MpagerAdapter
 import com.pujara.dhaval.spendsmart.welcome.adapter.TranslateClass
 import kotlinx.android.synthetic.main.slider_fragment.view.*
-import kotlinx.android.synthetic.main.smr_slide_forth.view.*
 
-class SliderFragment : Fragment(){
+
+class SliderFragment : Fragment() {
     private lateinit var mPager: ViewPager
     private lateinit var mpagerAdapter: MpagerAdapter
     private val TAG = "SliderFragment"
@@ -31,32 +35,33 @@ class SliderFragment : Fragment(){
         mPager = view.findViewById(R.id.viewPager)
         mPager.setPageTransformer(false, TranslateClass())
         mpagerAdapter = MpagerAdapter()
-        mPager.setAdapter(mpagerAdapter)
+        mPager.adapter = mpagerAdapter
 
         dotslayout = view.findViewById(R.id.dotsLayout)
         createDots(0)
 
-        view.viewpagerNextButton.setOnClickListener{nextSlide()}
+        view.viewpagerNextButton.setOnClickListener { nextSlide() }
 
 
         mPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(i: Int, v: Float, i1: Int) {}
+            @SuppressLint("SetTextI18n")
             override fun onPageSelected(i: Int) {
                 createDots(i)
                 if (i == 3) {
                     view.viewpagerNextButton.visibility = View.VISIBLE
                     view.viewpagerNextButton.text = "Start"
-                    loadMainPage()
-                }else{
+                } else {
                     view.viewpagerNextButton.visibility = View.INVISIBLE
                 }
             }
+
             override fun onPageScrollStateChanged(i: Int) {}
         })
 
-        view.setOnKeyListener(object : View.OnKeyListener{
+        view.setOnKeyListener(object : View.OnKeyListener {
             override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
-                if(keyCode == KeyEvent.KEYCODE_BACK){
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
                     fragmentManager?.popBackStack()
                     (activity as NavigationHost).backPressed()
                 }
@@ -83,25 +88,18 @@ class SliderFragment : Fragment(){
         }
     }
 
-    fun nextSlide() {
-        val next_slide = mPager.currentItem + 1
+    private fun nextSlide() {
+        val nextSlide = mPager.currentItem + 1
         Log.d(TAG, "onClick: here")
-        if (next_slide < 4) {
-            mPager.currentItem = next_slide
+        if (nextSlide < 4) {
+            mPager.currentItem = nextSlide
         } else {
             loadMainPage()
         }
     }
 
     fun loadMainPage() {
-        Log.d(TAG, "loadMainPage: Yahoo... I did it")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onPause() {
-        super.onPause()
+        activity?.fragmentManager?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        (activity as NavigationHost).newActivity(DashboardActivity())
     }
 }

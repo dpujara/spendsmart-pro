@@ -11,6 +11,7 @@ import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
 
 class SignupPresenter(internal var iSignupView: ISignupView):
     ISignupPresenter {
+
     private var mFirebaseAuth = FirebaseAuth.getInstance()
     override fun registerNewUser(name:String, email: String, password: String) {
 
@@ -26,7 +27,7 @@ class SignupPresenter(internal var iSignupView: ISignupView):
 
         val isUsernameEmpty = user.isUsernameEmpty
         if(isUsernameEmpty){
-            displayError("Username can not be empty !!!")
+            displayError("Email can not be empty !!!")
             return
         }
 
@@ -53,7 +54,7 @@ class SignupPresenter(internal var iSignupView: ISignupView):
     }
 
     private fun displayError(message:String) {
-        iSignupView.onSignUpResult(message)
+        iSignupView.onSignUpError(message)
     }
 
     override fun onBackButtonClicked() {

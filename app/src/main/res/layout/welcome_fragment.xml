@@ -99,7 +99,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView_welcome_privacy"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/button_welcom_google" android:focusable="true"/>
+            app:layout_constraintStart_toStartOf="@+id/button_welcom_google" android:focusable="true"
+            tools:targetApi="m"/>
 
     <TextView
             android:id="@+id/textView_welcome_privacy"
@@ -113,7 +114,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/textView_welcome_contactus"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView_welcome_terms" />
+            app:layout_constraintStart_toEndOf="@+id/textView_welcome_terms" tools:targetApi="m"
+            tools:ignore="UnusedAttribute"/>
 
     <TextView
             android:id="@+id/textView_welcome_contactus"
@@ -125,7 +127,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:padding="@dimen/_1sdp"
             app:layout_constraintEnd_toEndOf="@+id/button_welcom_google"
-            app:layout_constraintStart_toEndOf="@+id/textView_welcome_privacy" tools:targetApi="m"/>
+            app:layout_constraintStart_toEndOf="@+id/textView_welcome_privacy" tools:targetApi="m"
+            tools:ignore="UnusedAttribute"/>
 
     <android.support.constraint.Guideline
             android:id="@+id/guideline3"
@@ -133,5 +136,5 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.15" />
-
+    <include layout="@layout/progressbar"/>
 </android.support.constraint.ConstraintLayout>

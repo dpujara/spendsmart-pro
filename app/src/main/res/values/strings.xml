@@ -2,15 +2,27 @@
     <string name="app_name">SpendSmart</string>
     <string name="welcome_spendsmart_image">SpendSmart Image</string>
     <string name="spendsmart">SpendSmart</string>
-    <string name="welcome_contact_us"><u>Contact us</u></string>
-    <string name="welcome_privacy_policy"><u>Privacy Policy</u> |</string>
-    <string name="welcome_terms"><u>Terms</u> |</string>
+    <string name="welcome_contact_us">
+        <u>Contact us</u>
+    </string>
+    <string name="welcome_privacy_policy">
+        <u>Privacy Policy</u>
+        |
+    </string>
+    <string name="welcome_terms">
+        <u>Terms</u>
+        |
+    </string>
     <string name="welcome_sign_up">Sign up</string>
     <string name="welcome_log_in">Log In</string>
     <string name="button_done">Done</string>
     <string name="button_back">Back</string>
-    <string name="text_forgot_your_password"><u>Forgot your Password?</u></string>
-    <string name="text_term_condition"><u>By singing up, you accept the Spendsmart Terms of Services.</u></string>
+    <string name="text_forgot_your_password">
+        <u>Forgot your Password?</u>
+    </string>
+    <string name="text_term_condition">
+        <u>By singing up, you accept the Spendsmart Terms of Services.</u>
+    </string>
     <string name="password">Password</string>
     <string name="username">Username</string>
     <string name="email_address">Email</string>
@@ -34,4 +46,10 @@
     <string name="welcome_policy">Spendsmart Privacy Policy</string>
     <string name="terms_url">https://webpages.scu.edu/ftp/dpujara/terms.html</string>
     <string name="policy_url">https://www.freeprivacypolicy.com/privacy/view/4b789b77ecc40203195eb05f9f4fd858</string>
+    <string name="loading_dialog">Loading .....</string>
+    <string name="next_button_slide4">Next</string>
+    <string name="logout_menu">Logout</string>
+    <string name="home_menu">Home</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
