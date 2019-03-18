@@ -7,23 +7,22 @@ import android.support.design.widget.Snackbar
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import com.pujara.dhaval.spendsmart.NavigationHost
-import com.pujara.dhaval.spendsmart.welcome.presenter.signup.ISignupPresenter
-import com.pujara.dhaval.spendsmart.welcome.presenter.signup.SignupPresenter
-import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.android.synthetic.main.signup_fragment.*
-import kotlinx.android.synthetic.main.signup_fragment.view.*
-import android.text.Editable
-import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
+import com.pujara.dhaval.spendsmart.NavigationHost
 import com.pujara.dhaval.spendsmart.R
+import com.pujara.dhaval.spendsmart.welcome.presenter.signup.ISignupPresenter
+import com.pujara.dhaval.spendsmart.welcome.presenter.signup.SignupPresenter
+import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
+import kotlinx.android.synthetic.main.signup_fragment.*
+import kotlinx.android.synthetic.main.signup_fragment.view.*
 
 class SignUpFragment : Fragment(),ISignupView {
     override fun onSignUpError(message: String) {
@@ -34,6 +33,7 @@ class SignUpFragment : Fragment(),ISignupView {
     fun displayError(message: String) {
         val snackbar : Snackbar? = view?.let { Snackbar.make(it,message,Snackbar.LENGTH_LONG) }
         snackbar?.show()
+        enableInput()
     }
     private lateinit var signupPresenter: ISignupPresenter
     private var progressBar : ProgressBar? = null

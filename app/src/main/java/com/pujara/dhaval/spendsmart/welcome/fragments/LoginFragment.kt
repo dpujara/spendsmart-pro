@@ -18,22 +18,40 @@ import com.pujara.dhaval.spendsmart.welcome.presenter.login.LoginPresenter
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
 import kotlinx.android.synthetic.main.login_fragment.*
 
-class LoginFragment : Fragment(),ILoginView {
-    private lateinit var loginPresenter : ILoginPresenter
-    private var progressBar : ProgressBar? = null
-    var snackbar : Snackbar? = null
+
+class LoginFragment : Fragment(), ILoginView {
+
+    private lateinit var loginPresenter: ILoginPresenter
+    private var progressBar: ProgressBar? = null
+    var snackbar: Snackbar? = null
 
     override fun navigateToForgotFragment() {
-        (activity as NavigationHost).navigateTo(ForgotPasswordFragment(), true,true, R.anim.slide_in_bottom, R.anim.fade_out,R.anim.fade_in,R.anim.fade_out) // Navigate to the next Fragment
+        (activity as NavigationHost).navigateTo(
+            ForgotPasswordFragment(),
+            true,
+            true,
+            R.anim.slide_in_bottom,
+            R.anim.fade_out,
+            R.anim.fade_in,
+            R.anim.fade_out
+        ) // Navigate to the next Fragment
     }
 
     override fun onSignInSuccess(user: FirebaseUser?) {
         fragmentManager?.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        (activity as NavigationHost).navigateTo(SliderFragment(),false,true,R.anim.slide_in_bottom, R.anim.fade_out,0,0)
+        (activity as NavigationHost).navigateTo(
+            SliderFragment(),
+            false,
+            true,
+            R.anim.slide_in_bottom,
+            R.anim.fade_out,
+            0,
+            0
+        )
     }
 
     override fun onSignInFailure(exception: String?) {
-        snackbar  = view?.let { Snackbar.make(it,"Invalid username/password !!!",Snackbar.LENGTH_LONG) }
+        snackbar = view?.let { Snackbar.make(it, "Invalid username/password !!!", Snackbar.LENGTH_LONG) }
         snackbar?.show()
         hideProgress()
     }
@@ -55,7 +73,7 @@ class LoginFragment : Fragment(),ILoginView {
     }
 
     override fun onLoginSuccess() {
-        snackbar  = view?.let { Snackbar.make(it,"Successfully Logged In!!!",Snackbar.LENGTH_LONG) }
+        snackbar = view?.let { Snackbar.make(it, "Successfully Logged In!!!", Snackbar.LENGTH_LONG) }
         snackbar?.show()
     }
 
@@ -64,7 +82,7 @@ class LoginFragment : Fragment(),ILoginView {
     }
 
     override fun onLoginResult(message: String) {
-        val snackbar : Snackbar? = view?.let { Snackbar.make(it,message,Snackbar.LENGTH_LONG) }
+        val snackbar: Snackbar? = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG) }
         snackbar?.show()
         hideProgress()
     }
@@ -78,15 +96,15 @@ class LoginFragment : Fragment(),ILoginView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        back_button_login.setOnClickListener{
+        back_button_login.setOnClickListener {
             hideSoftKeyboard(view)
             loginPresenter.onBackButtonClicked()
         }
         done_button_login.setOnClickListener {
             hideSoftKeyboard(view)
-            loginPresenter.onLogin(edittext_username_login.text.toString(),edittext_password_login.text.toString())
+            loginPresenter.onLogin(edittext_username_login.text.toString(), edittext_password_login.text.toString())
         }
-        textViewForgotPassword.setOnClickListener { loginPresenter.onForgotPasswordClicked()  }
+        textViewForgotPassword.setOnClickListener { loginPresenter.onForgotPasswordClicked() }
     }
 
     private fun setInputs(boolean: Boolean) {

@@ -52,4 +52,9 @@
     <string name="home_menu">Home</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="filter">Filter</string>
+    <string name="total_balance">TOTAL BALANCE</string>
+    <string name="display_picture">Display Picture</string>
+    <string name="settled_up">Settled Up</string>
+    <string name="enter">Enter</string>
 </resources>

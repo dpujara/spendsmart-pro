@@ -19,23 +19,23 @@ import android.widget.FrameLayout
 import android.view.animation.AlphaAnimation
 
 
-class ContactUsFragment : Fragment(),IWelcomeBottomView {
+class ContactUsFragment : Fragment(), IWelcomeBottomView {
     private lateinit var welcomeBottomPresenter: IWelcomeBottomPresenter
-    private var snackbar : Snackbar? = null
+    private var snackbar: Snackbar? = null
     private var progressBarHolder: FrameLayout? = null
     private var inAnimation: AlphaAnimation? = null
     private var outAnimation: AlphaAnimation? = null
-    private var progressBar : ProgressBar? = null
+    private var progressBar: ProgressBar? = null
 
     override fun onFeedbackResult(result: Boolean) {
         hideProgressbar()
-        if(result){
+        if (result) {
             emptyEditText()
             clearFocus()
-            view?.let { hideSoftKeyboard(it)}
+            view?.let { hideSoftKeyboard(it) }
 
             displayError(getString(R.string.feedback_successfully_message))
-        }else{
+        } else {
             displayError(getString(R.string.something_went_wrong))
         }
     }
@@ -54,7 +54,7 @@ class ContactUsFragment : Fragment(),IWelcomeBottomView {
 
     override fun displayError(error: String) {
         hideProgressbar()
-        snackbar  = view?.let { Snackbar.make(it,error, Snackbar.LENGTH_LONG) }
+        snackbar = view?.let { Snackbar.make(it, error, Snackbar.LENGTH_LONG) }
         snackbar?.show()
     }
 
@@ -65,14 +65,14 @@ class ContactUsFragment : Fragment(),IWelcomeBottomView {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.contactus_welcome_fragment, container, false)
         welcomeBottomPresenter = WelcomeBottomPresenter(this)
-        progressBarHolder =  view.findViewById(R.id.progressBarHolder)
+        progressBarHolder = view.findViewById(R.id.progressBarHolder)
         progressBar = view.findViewById(R.id.progress_appbar_contactus)
         return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if(!isAdded){
+        if (!isAdded) {
             return
         }
         view.app_bar_contact.setNavigationOnClickListener { welcomeBottomPresenter.onBackNavigationClicked() }
@@ -82,11 +82,12 @@ class ContactUsFragment : Fragment(),IWelcomeBottomView {
             welcomeBottomPresenter.onSendFeedbackClicked(
                 view.edittext_username_contact_us.text.toString(),
                 view.edittext_subject_contact_us.text.toString(),
-                view.edittext_subject_feedback.text.toString())
+                view.edittext_subject_feedback.text.toString()
+            )
         }
     }
 
-    private fun showProgressbar(){
+    private fun showProgressbar() {
         inAnimation = AlphaAnimation(0f, 1f)
         inAnimation?.duration = 200
         progressBarHolder?.animation = inAnimation
@@ -94,7 +95,7 @@ class ContactUsFragment : Fragment(),IWelcomeBottomView {
         progressBar?.visibility = View.VISIBLE
     }
 
-    private fun hideProgressbar(){
+    private fun hideProgressbar() {
         outAnimation = AlphaAnimation(1f, 0f)
         outAnimation?.duration = 200
         progressBarHolder?.animation = outAnimation

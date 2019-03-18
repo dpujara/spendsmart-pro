@@ -11,44 +11,45 @@ import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
 import com.pujara.dhaval.spendsmart.welcome.view.ISignupView
 import com.pujara.dhaval.spendsmart.welcome.view.IWelcomeBottomView
 
-class LoginSignupInteractor : ILoginSignupInteractor{
+class LoginSignupInteractor : ILoginSignupInteractor {
 
     private val TAG = LoginSignupInteractor::class.java.name
     private var mFirebaseAuth = FirebaseAuth.getInstance()
     private var event = Event()
     private lateinit var database: DatabaseReference
 
-    override fun forgotPassword(email: String,iForgotpasswordView: IForgotpasswordView) {
+    override fun forgotPassword(email: String, iForgotpasswordView: IForgotpasswordView) {
         mFirebaseAuth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    event.onForgotPasswordSuccess("Email sent !!!",iForgotpasswordView)
+                    event.onForgotPasswordSuccess("Email sent !!!", iForgotpasswordView)
                     Log.d(TAG, "Email sent.")
-                }else{
-                    event.onForgotPasswordFailure("Something went wrong!!",iForgotpasswordView)
+                } else {
+                    event.onForgotPasswordFailure("Something went wrong!!", iForgotpasswordView)
                     Log.d(TAG, "Email was not sent.")
                 }
             }
     }
 
-    override fun doSignup(email: String,password: String,name: String,iSignupView: ISignupView) {
+    override fun doSignup(email: String, password: String, name: String, iSignupView: ISignupView) {
         mFirebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d(TAG, "createUserWithEmail:success")
-                    val user : String? = mFirebaseAuth.currentUser?.uid
+                    val user: String? = mFirebaseAuth.currentUser?.uid
                     database = FirebaseDatabase.getInstance().reference
                     val userData = HashMap<String, Any>()
                     userData["email"] = email
                     userData["password"] = password
                     userData["name"] = name
+                    userData["userid"] = mFirebaseAuth.uid.toString()
 
                     if (user != null) {
                         database.child("root").child("users").child(user).setValue(userData)
-                        event.onSignUpSuccess(user,iSignupView)
+                        event.onSignUpSuccess(user, iSignupView)
                     }
                 } else {
-                    event.onSignUpFailure(task.exception,iSignupView)
+                    event.onSignUpFailure(task.exception, iSignupView)
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                 }
             }
@@ -59,22 +60,26 @@ class LoginSignupInteractor : ILoginSignupInteractor{
         password: String,
         iLoginView: ILoginView
     ) {
-        mFirebaseAuth.signInWithEmailAndPassword(email,password)
-            .addOnCompleteListener{ task ->
-                if(task.isSuccessful){
+        mFirebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
                     Log.d(TAG, "signInWithEmail:success")
-                    val user :FirebaseUser? = mFirebaseAuth.currentUser
-                    event.onSignInSuccess(user,iLoginView)
-                }
-                else{
+                    val user: FirebaseUser? = mFirebaseAuth.currentUser
+                    event.onSignInSuccess(user, iLoginView)
+                } else {
                     Log.d(TAG, "signInWithEmail:failure")
                     val errorMessage = task.exception?.message
-                    event.onSignInFailure(iLoginView,errorMessage)
+                    event.onSignInFailure(iLoginView, errorMessage)
                 }
             }
     }
 
-    override fun submitFeedback(email: String, subject: String, description: String, iWelcomeBottomView1: IWelcomeBottomView) {
+    override fun submitFeedback(
+        email: String,
+        subject: String,
+        description: String,
+        iWelcomeBottomView1: IWelcomeBottomView
+    ) {
         val feedback = HashMap<String, Any>()
         feedback["email"] = email
         feedback["description"] = description
@@ -82,11 +87,10 @@ class LoginSignupInteractor : ILoginSignupInteractor{
         feedback["responded"] = "No"
         database = FirebaseDatabase.getInstance().reference
         database.child("root").child("feedback").push().setValue(feedback).addOnCompleteListener { task ->
-            if (task.isSuccessful){
-                event.onFeedbackResult(iWelcomeBottomView1,true)
-            }
-            else{
-                event.onFeedbackResult(iWelcomeBottomView1,false)
+            if (task.isSuccessful) {
+                event.onFeedbackResult(iWelcomeBottomView1, true)
+            } else {
+                event.onFeedbackResult(iWelcomeBottomView1, false)
             }
         }
     }
