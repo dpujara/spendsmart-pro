@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <android.support.design.widget.TextInputLayout
+            style="@style/Widget.Spend.TextInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/description"
+            app:layout_constraintTop_toTopOf="parent"
+            android:id="@+id/textInputLayout"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp">
+
+        <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textSize="@dimen/_12sdp"
+                android:id="@+id/edittext_descr_fullscreen_dialog_personal"
+                android:maxLines="1"/>
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout android:orientation="horizontal"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+        <android.support.design.widget.TextInputLayout
+                style="@style/Widget.Spend.TextInputLayout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:hint="@string/amount"
+                android:id="@+id/textInputLayoutAmount"
+                android:layout_marginStart="@dimen/_16sdp">
+
+            <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:textSize="@dimen/_12sdp"
+                    android:id="@+id/edittext_amount_fullscreen_dialog_personal"
+                    android:maxLines="1"/>
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/gradient_spinner"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner"
+                app:layout_constraintStart_toEndOf="@+id/textInputLayoutAmount"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_4sdp"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:padding="@dimen/_10sdp"
+                android:entries="@array/expense_array"
+                android:prompt="@string/country_prompt"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutAmount"
+                app:layout_constraintTop_toTopOf="@+id/textInputLayoutAmount"/>
+    </LinearLayout>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select_date"
+            android:id="@+id/dateTextview"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/colorPrimary"
+            android:padding="@dimen/_10sdp"
+            android:background="@drawable/gradient_spinner"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_4sdp"/>
+
+</LinearLayout>

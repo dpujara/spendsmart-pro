@@ -57,4 +57,20 @@
     <string name="display_picture">Display Picture</string>
     <string name="settled_up">Settled Up</string>
     <string name="enter">Enter</string>
+    <string name="personal_expense">Personal Expense</string>
+    <string name="amount">Amount</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+
+    <string name="country_prompt">Choose expense type</string>
+    <string name="total_expense">Total Expense:</string>
+    <string name="total_income">Total Income:</string>
+    <string name="select_date">Select Date</string>
+    <string name="msg_token_fmt">Message Token Fragment</string>
+    <string name="msg_subscribed">msg_subscribed</string>
+    <string name="msg_subscribe_failed">msg_subscribe_failed</string>
+    <string-array name="expense_array">
+        <item>Expense</item>
+        <item>Income</item>
+    </string-array>
 </resources>

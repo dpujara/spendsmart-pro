@@ -1,12 +1,17 @@
 package com.pujara.dhaval.spendsmart.dashboard.interactor
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.util.Log.d
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.pujara.dhaval.spendsmart.dashboard.model.FriendBalance
+import com.pujara.dhaval.spendsmart.dashboard.model.PersonalExpenseData
+import com.pujara.dhaval.spendsmart.dashboard.view.IAddExpenseView
 import com.pujara.dhaval.spendsmart.dashboard.view.IFriendListView
 import com.pujara.dhaval.spendsmart.dashboard.view.IAddFriendView
+import com.pujara.dhaval.spendsmart.dashboard.view.IPersonalExpenseView
+import java.text.SimpleDateFormat
 
 class DashboardInteractor : IDashboardInteractor {
 
@@ -102,10 +107,10 @@ class DashboardInteractor : IDashboardInteractor {
                                 val friendData = HashMap<String, Any>()
                                 friendData["userid"] = FirebaseAuth.getInstance().currentUser?.uid.toString()
                                 friendData["email"] = FirebaseAuth.getInstance().currentUser?.email.toString()
-                                if(name != null){
+                                if (name != null) {
                                     friendData["name"] = name
                                 }
-                                friendInsertRefernece.push().setValue(friendData)
+                                friendInsertRefernece.child(friendData["userid"].toString()).setValue(friendData)
                             }
                             if (!userExists) {
                                 iAddFriendView.error("User doesn't exists !!!")
@@ -119,5 +124,120 @@ class DashboardInteractor : IDashboardInteractor {
             }
         }
         queryFriendList.addListenerForSingleValueEvent(valueFriendEventListener)
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    override fun AddPersonalExpenseFirebase(
+        iAddExpenseView: IAddExpenseView,
+        descr: String,
+        amountExpense: String,
+        date: String,
+        expense: String,
+        user: String?
+    ) {
+        val expenseData = HashMap<String, Any>()
+        expenseData["description"] = descr
+        expenseData["amount"] = amountExpense
+        expenseData["expense"] = expense
+
+        expenseData["day"] = date.split("/")[1]
+        expenseData["month"] = date.split("/")[0]
+        expenseData["year"] = date.split("/")[2]
+        val format = SimpleDateFormat("mm/dd/yyyy")
+        val date1 = format.parse(date)
+        expenseData["date"] = date1.time
+        val singleExpenseAddRef =
+            FirebaseDatabase.getInstance().reference.child("root").child("users").child(user.toString())
+                .child("personalexpenses").push()
+        val mUniqueId = singleExpenseAddRef.key
+        expenseData["uniqueKey"] = mUniqueId.toString()
+
+        singleExpenseAddRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
+                iAddExpenseView.expenseAdded("Added Successfully !!!")
+            }
+
+            override fun onCancelled(p0: DatabaseError) {}
+        })
+        singleExpenseAddRef.setValue(expenseData)
+
+        val activityExpenseAddRef =
+            FirebaseDatabase.getInstance().reference.child("root").child("users").child(user.toString())
+                .child("activity")
+        var activity = "You"
+        val activityData = HashMap<String, Any>()
+        if (expense == "expense") {
+            activity += "Spent $amountExpense @ $descr"
+            activityData["expense"] = activity
+        } else {
+            activity += "Earned $amountExpense @ $descr"
+            activityData["income"] = activity
+        }
+        activityData["type"] = "personal"
+        activityData["day"] = date.split("/")[1]
+        activityData["month"] = date.split("/")[0]
+        activityData["year"] = date.split("/")[2]
+        val mGroupId = activityExpenseAddRef.push().key
+        activityData["uniqueId"] = mGroupId.toString()
+        activityExpenseAddRef.child(mUniqueId.toString()).setValue(activityData)
+    }
+
+    override fun fetchPersonalExpenseFirebase(iPersonalExpenseView: IPersonalExpenseView, user: String?) {
+        val expenseList: ArrayList<PersonalExpenseData> = ArrayList()
+        val expenseListReference =
+            FirebaseDatabase.getInstance().reference.child("root").child("users").child(user.toString())
+                .child("personalexpenses")
+
+        val expenseListListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val children = dataSnapshot.children
+                expenseList.clear()
+                children.forEach {
+                    val list = it.getValue(PersonalExpenseData::class.java)
+                    if (list != null) {
+                        expenseList.add(list)
+                    }
+                }
+
+                iPersonalExpenseView.setExpenseList(expenseList)
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                Log.w("tagDash", "loadPost:onCancelled", databaseError.toException())
+            }
+        }
+        expenseListReference.addValueEventListener(expenseListListener)
+    }
+
+    override fun UpdatePersonalExpenseFirebase(
+        iAddExpenseView: IAddExpenseView,
+        uniqueKey: String,
+        descr: String,
+        amount: String,
+        date: String,
+        expense: String,
+        user: String?
+    ) {
+        val expenseData = HashMap<String, Any>()
+        expenseData["description"] = descr
+        expenseData["amount"] = amount
+        expenseData["expense"] = expense
+        expenseData["day"] = date.split("/")[1]
+        expenseData["month"] = date.split("/")[0]
+        expenseData["year"] = date.split("/")[2]
+        val format = SimpleDateFormat("mm/dd/yyyy")
+        val date1 = format.parse(date)
+        expenseData["date"] = date1.time
+        expenseData["uniqueKey"] = uniqueKey
+        d("uniqiei", uniqueKey)
+        FirebaseDatabase.getInstance().reference.child("root").child("users").child(user.toString())
+            .child("personalexpenses").child(uniqueKey).setValue(expenseData)
+        iAddExpenseView.updatedData("Updated Data")
+    }
+
+    override fun deletePersonalExpenseFirebase(iAddExpenseView: IAddExpenseView, uniqueKey: String, user: String?) {
+        FirebaseDatabase.getInstance().reference.child("root").child("users").child(user.toString())
+            .child("personalexpenses").child(uniqueKey).removeValue()
+        iAddExpenseView.updatedData("Deleted Data")
     }
 }

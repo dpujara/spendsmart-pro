@@ -23,7 +23,10 @@ import com.pujara.dhaval.spendsmart.dashboard.view.IFriendListView
 
 class FriendList : Fragment(), IFriendListView {
     private lateinit var friendListData: MutableList<FriendBalance>
-    private var fabBtn: FloatingActionButton? = null
+    private var mFirebaseAuth = FirebaseAuth.getInstance()
+    val user: String? = mFirebaseAuth.currentUser?.uid
+    private var recyclerViewFriendList: RecyclerView? = null
+    private lateinit var friendListPresenter: IFriendListPresenter
 
     override fun setFriendList(friendList: MutableList<FriendBalance>) {
         friendListData = friendList
@@ -32,21 +35,13 @@ class FriendList : Fragment(), IFriendListView {
         recyclerViewFriendList?.adapter = FriendListAdapter(friendListData)
     }
 
-    private var mFirebaseAuth = FirebaseAuth.getInstance()
-    val user: String? = mFirebaseAuth.currentUser?.uid
-
-    private var recyclerViewFriendList: RecyclerView? = null
-    private lateinit var friendListPresenter: IFriendListPresenter
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        d("FriendList", "Pause")
         val view = inflater.inflate(R.layout.fragment_friend_list, container, false)
         friendListPresenter = FriendListPresenter(this)
         friendListPresenter.fetchFriends(user)
-        fabBtn = view.findViewById(R.id.fabBtn)
         return view
     }
 
@@ -54,23 +49,6 @@ class FriendList : Fragment(), IFriendListView {
         if (!isAdded) {
             return
         }
-        d("FriendList", "Pause")
-        fabBtn?.setOnClickListener {
-            val fragment: Fragment? = fragmentManager?.findFragmentById(R.id.fragment_container_friend)
-            if (fragment is FriendList) {
-                d("fab", "fab friend")
-            }
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        d("FriendList", "Pause")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        d("FriendList", "Resume")
     }
 
     fun addFriends(dashboardActivity: DashboardActivity) {

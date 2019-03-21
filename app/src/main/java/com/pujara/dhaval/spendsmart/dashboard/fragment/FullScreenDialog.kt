@@ -34,10 +34,10 @@ class FullscreenDialog : DialogFragment(), IAddFriendView {
         displayMessage("$email added successfully")
     }
 
-    var snackbar: Snackbar? = null
+    private var snackbar: Snackbar? = null
     private var mFirebaseAuth = FirebaseAuth.getInstance()
     val user: String? = mFirebaseAuth.currentUser?.uid
-    val userEmail : String = mFirebaseAuth.currentUser?.email.toString()
+    private val userEmail : String = mFirebaseAuth.currentUser?.email.toString()
 
 
     private lateinit var addFriendPresenter: IAddFriendPresenter
@@ -66,7 +66,7 @@ class FullscreenDialog : DialogFragment(), IAddFriendView {
         view.button_action.setOnClickListener {
             val email = view.edittext_username_fullscreen_dialog.text.toString()
 
-            if (email.equals("")) {
+            if (email == "") {
                 displayMessage("Email can not be  empty !!!")
             } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 displayMessage("Invalid Email id !!!")
@@ -96,7 +96,7 @@ class FullscreenDialog : DialogFragment(), IAddFriendView {
         }
     }
 
-    fun displayMessage(message: String) {
+    private fun displayMessage(message: String) {
         snackbar = view?.let { Snackbar.make(it, message, Snackbar.LENGTH_LONG) }
         snackbar?.show()
     }

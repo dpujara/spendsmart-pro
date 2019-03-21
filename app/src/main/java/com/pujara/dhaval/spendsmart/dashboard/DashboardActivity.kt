@@ -1,6 +1,11 @@
 package com.pujara.dhaval.spendsmart.dashboard
 
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -9,8 +14,13 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.util.Log.d
 import android.view.View
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.messaging.FirebaseMessaging
 import com.pujara.dhaval.spendsmart.R
 import com.pujara.dhaval.spendsmart.dashboard.adapter.CustompagerAdapter
 import com.pujara.dhaval.spendsmart.dashboard.fragment.FriendList
@@ -20,18 +30,15 @@ import kotlinx.android.synthetic.main.activity_dashboard.*
 import com.pujara.dhaval.spendsmart.NavigationHost
 
 
-class DashboardActivity : AppCompatActivity(),NavigationHost {
-    override fun newActivity(dashboardActivity: Activity) {
+class DashboardActivity : AppCompatActivity(), NavigationHost {
+    override fun newActivity(dashboardActivity: Activity) {}
 
-    }
-
-    override fun backPressed() {
-
-    }
-
+    override fun backPressed() {}
+    private var notificationManager: NotificationManager? = null
     private lateinit var drawer: DrawerLayout
     var pagerAdapter: CustompagerAdapter? = null
     var fabstate: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
@@ -62,7 +69,7 @@ class DashboardActivity : AppCompatActivity(),NavigationHost {
         fabBtn.setOnClickListener {
             if (fabstate == 0) {
                 val persoanlFragment = PersonalExpense()
-                persoanlFragment.demo()
+                persoanlFragment.addExpense(this)
             } else if (fabstate == 1) {
                 val friendList = FriendList()
                 friendList.addFriends(this)
@@ -90,6 +97,44 @@ class DashboardActivity : AppCompatActivity(),NavigationHost {
                 }
             }
         })
+        notificationManager =
+            getSystemService(
+                Context.NOTIFICATION_SERVICE
+            ) as NotificationManager
+
+        createNotificationChannel(
+            "com.ebookfrenzy.notifydemo.news",
+            "NotifyDemo News",
+            "Example News Channel"
+        )
+
+        FirebaseMessaging.getInstance().subscribeToTopic("general")
+            .addOnCompleteListener { task ->
+                var msg = getString(R.string.msg_subscribed)
+                if (!task.isSuccessful) {
+                    msg = getString(R.string.msg_subscribe_failed)
+                }
+                Log.d("TAG", msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
+
+    }
+
+    private fun createNotificationChannel(
+        id: String, name: String,
+        description: String
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val importance = NotificationManager.IMPORTANCE_LOW
+            val channel = NotificationChannel(id, name, importance)
+            channel.description = description
+            channel.enableLights(true)
+            channel.lightColor = Color.RED
+            channel.enableVibration(true)
+            channel.vibrationPattern =
+                longArrayOf(100, 200, 300, 400, 500, 400, 300, 200, 400)
+            notificationManager?.createNotificationChannel(channel)
+        }
     }
 
     override fun onBackPressed() {
@@ -98,21 +143,6 @@ class DashboardActivity : AppCompatActivity(),NavigationHost {
         } else {
             super.onBackPressed()
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        d("FriendList","dude")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        d("FriendList","dude")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        d("FriendList","dude")
     }
 
     override fun navigateTo(
@@ -131,7 +161,7 @@ class DashboardActivity : AppCompatActivity(),NavigationHost {
         }
         transaction.replace(R.id.container_drawer, fragment)
         if (addToBackStack) {
-            d("Tag","Hello Added to backstack")
+            d("Tag", "Hello Added to backstack")
             transaction.addToBackStack(null)
         }
         transaction.commit()

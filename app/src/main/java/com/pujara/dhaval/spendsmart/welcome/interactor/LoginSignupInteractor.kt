@@ -1,10 +1,15 @@
 package com.pujara.dhaval.spendsmart.welcome.interactor
 
 import android.util.Log
+import android.util.Log.d
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import com.pujara.dhaval.spendsmart.welcome.event.Event
 import com.pujara.dhaval.spendsmart.welcome.view.IForgotpasswordView
 import com.pujara.dhaval.spendsmart.welcome.view.ILoginView
@@ -43,6 +48,8 @@ class LoginSignupInteractor : ILoginSignupInteractor {
                     userData["password"] = password
                     userData["name"] = name
                     userData["userid"] = mFirebaseAuth.uid.toString()
+                    userData["token"] = FirebaseInstanceId.getInstance().token.toString()
+                    d("TAG", userData["token"].toString())
 
                     if (user != null) {
                         database.child("root").child("users").child(user).setValue(userData)
