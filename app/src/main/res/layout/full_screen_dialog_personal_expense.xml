@@ -29,6 +29,7 @@
                     android:layout_width="0dp"
                     android:id="@+id/appbar_title_textview"
                     android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="@string/personal_expense"

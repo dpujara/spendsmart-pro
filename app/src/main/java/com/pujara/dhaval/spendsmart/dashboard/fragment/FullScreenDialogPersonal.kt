@@ -34,36 +34,20 @@ import com.pujara.dhaval.spendsmart.dashboard.ButtonChangeVisibility
 
 
 class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
-    override fun updatedData(message: String) {
-        view?.let { hideSoftKeyboard(it) }
-        displayMessage(message)
-        fragmentManager?.popBackStack()
-        dismiss()
-    }
-
-    override fun expenseAdded(str: String) {
-        view?.let { hideSoftKeyboard(it) }
-        displayMessage(str)
-        view?.edittext_amount_fullscreen_dialog_personal?.text = null
-        view?.edittext_descr_fullscreen_dialog_personal?.text = null
-        view?.dateTextview?.text = null
-        view?.edittext_descr_fullscreen_dialog_personal?.clearFocus()
-        view?.edittext_amount_fullscreen_dialog_personal?.clearFocus()
-        view?.dateTextview?.clearFocus()
-    }
-
+    private lateinit var fullScreenDialogPersonal: ButtonChangeVisibility
     private lateinit var addExpensePresenter: IAddExpensePresenter
     private var snackbar: Snackbar? = null
     private var mFirebaseAuth = FirebaseAuth.getInstance()
     val user: String? = mFirebaseAuth.currentUser?.uid
-    private val userEmail: String = mFirebaseAuth.currentUser?.email.toString()
     private var cal = Calendar.getInstance()
-    var edit = ""
-    var uniqueKey = ""
+    private var edit = ""
+    private var uniqueKey = ""
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val rootView = inflater.inflate(R.layout.full_screen_dialog_personal_expense, container, false)
+        val spinner: Spinner? = view?.findViewById(R.id.spinner)
 
         addExpensePresenter = AddExpensePresenter(this)
         rootView.button_close_personal_expense.setOnClickListener {
@@ -73,14 +57,12 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
             dismiss()
         }
 
-        val spinner: Spinner? = view?.findViewById(R.id.spinner)
-
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                val item = parent?.getItemAtPosition(position).toString()
+                parent?.getItemAtPosition(position).toString()
             }
         }
 
@@ -111,35 +93,39 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
         }
 
         rootView?.button_action_personal_expense?.setOnClickListener {
-            if(edit == "Yes"){
+            if (edit == "Yes") {
                 fullScreenDialogPersonal.updateVisibility()
                 addExpensePresenter.updateExpenseData(
                     uniqueKey,
                     view?.edittext_descr_fullscreen_dialog_personal?.text.toString(),
-                    view?.edittext_amount_fullscreen_dialog_personal?.text.toString(), view?.dateTextview?.text.toString(),
-                    view?.spinner?.selectedItem.toString(), user
+                    view?.edittext_amount_fullscreen_dialog_personal?.text.toString(),
+                    view?.dateTextview?.text.toString(),
+                    view?.spinner?.selectedItem.toString(),
+                    user
                 )
 
-            }else{
+            } else {
                 d("clicked no", edit)
                 addExpensePresenter.insertExpenseData(
                     view?.edittext_descr_fullscreen_dialog_personal?.text.toString(),
-                    view?.edittext_amount_fullscreen_dialog_personal?.text.toString(), view?.dateTextview?.text.toString(),
-                    view?.spinner?.selectedItem.toString(), user
+                    view?.edittext_amount_fullscreen_dialog_personal?.text.toString(),
+                    view?.dateTextview?.text.toString(),
+                    view?.spinner?.selectedItem.toString(),
+                    user
                 )
             }
         }
 
 
-        rootView.button_delete_personal_expense.setOnClickListener{
+        rootView.button_delete_personal_expense.setOnClickListener {
             context?.let {
                 AlertDialog.Builder(it)
                     .setTitle("Delete entry")
                     .setMessage("Are you sure you want to delete this entry?")
 
-                    .setPositiveButton(android.R.string.yes) { dialog, which ->
+                    .setPositiveButton(android.R.string.yes) { _, which ->
                         fullScreenDialogPersonal.updateVisibility()
-                        addExpensePresenter.deleteData(uniqueKey,user)
+                        addExpensePresenter.deleteData(uniqueKey, user)
                     }
                     .setNegativeButton(android.R.string.no, null)
                     .show()
@@ -149,6 +135,24 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
         return rootView
     }
 
+    override fun updatedData(message: String) {
+        view?.let { hideSoftKeyboard(it) }
+        displayMessage(message)
+        fragmentManager?.popBackStack()
+        dismiss()
+    }
+
+    override fun expenseAdded(str: String) {
+        view?.let { hideSoftKeyboard(it) }
+        displayMessage(str)
+        view?.edittext_amount_fullscreen_dialog_personal?.text = null
+        view?.edittext_descr_fullscreen_dialog_personal?.text = null
+        view?.dateTextview?.text = null
+        view?.edittext_descr_fullscreen_dialog_personal?.clearFocus()
+        view?.edittext_amount_fullscreen_dialog_personal?.clearFocus()
+        view?.dateTextview?.clearFocus()
+    }
+
     override fun onResume() {
         super.onResume()
         val bundle: Bundle? = arguments
@@ -156,19 +160,22 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
         val editTextDescr: TextInputEditText = view?.findViewById(R.id.edittext_descr_fullscreen_dialog_personal)!!
         val editTextAmount: TextInputEditText = view?.findViewById(R.id.edittext_amount_fullscreen_dialog_personal)!!
         val textViewDate: TextView = view?.findViewById(R.id.dateTextview)!!
-        val spinner : Spinner = view?.findViewById(R.id.spinner)!!
-        val textViewTitle :TextView = view?.findViewById(R.id.appbar_title_textview)!!
-        val imageButtonDelete : ImageButton = view?.findViewById(R.id.button_delete_personal_expense)!!
+        val spinner: Spinner = view?.findViewById(R.id.spinner)!!
+        val textViewTitle: TextView = view?.findViewById(R.id.appbar_title_textview)!!
+        val imageButtonDelete: ImageButton = view?.findViewById(R.id.button_delete_personal_expense)!!
         if (bundle != null) {
             val personalExpenseData: PersonalExpenseData = bundle.getSerializable("personalData") as PersonalExpenseData
             uniqueKey = personalExpenseData.uniqueKey.toString()
             d("amount1", personalExpenseData.amount.toString())
             editTextDescr.setText(personalExpenseData.description, TextView.BufferType.EDITABLE)
             editTextAmount.setText(personalExpenseData.amount, TextView.BufferType.EDITABLE)
-            textViewDate.setText(personalExpenseData.month + "/" + personalExpenseData.day + "/" + personalExpenseData.year, TextView.BufferType.EDITABLE)
-            textViewTitle.text = "Edit Expense"
-            for (i in 0 until spinner.count){
-                if(spinner.getItemAtPosition(i).toString().equals(personalExpenseData.expense)){
+            textViewDate.setText(
+                personalExpenseData.month + "/" + personalExpenseData.day + "/" + personalExpenseData.year,
+                TextView.BufferType.EDITABLE
+            )
+            textViewTitle.text = resources.getString(R.string.edit_expense)
+            for (i in 0 until spinner.count) {
+                if (spinner.getItemAtPosition(i).toString() == personalExpenseData.expense) {
                     spinner.setSelection(i)
                     break
                 }
@@ -196,10 +203,5 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         fullScreenDialogPersonal = activity as ButtonChangeVisibility
-    }
-
-    private lateinit var fullScreenDialogPersonal: ButtonChangeVisibility
-    companion object {
-        fun newInstance() = FullScreenDialogPersonal()
     }
 }

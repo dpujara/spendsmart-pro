@@ -31,7 +31,10 @@
             app:layout_constraintStart_toEndOf="@+id/textView3"
             app:layout_constraintTop_toTopOf="@+id/textView3" app:layout_constraintBottom_toBottomOf="@+id/textView3"/>
     <TextView
-            android:text="@string/settled_up"
+            android:background="@drawable/linear_layout_drawable"
+            android:text="DD"
+            android:padding="@dimen/_2sdp"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/_8sdp"

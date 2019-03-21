@@ -7,10 +7,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.pujara.dhaval.spendsmart.dashboard.model.FriendBalance
 import com.pujara.dhaval.spendsmart.dashboard.model.PersonalExpenseData
-import com.pujara.dhaval.spendsmart.dashboard.view.IAddExpenseView
-import com.pujara.dhaval.spendsmart.dashboard.view.IFriendListView
-import com.pujara.dhaval.spendsmart.dashboard.view.IAddFriendView
-import com.pujara.dhaval.spendsmart.dashboard.view.IPersonalExpenseView
+import com.pujara.dhaval.spendsmart.dashboard.view.*
 import java.text.SimpleDateFormat
 
 class DashboardInteractor : IDashboardInteractor {
@@ -239,5 +236,29 @@ class DashboardInteractor : IDashboardInteractor {
         FirebaseDatabase.getInstance().reference.child("root").child("users").child(user.toString())
             .child("personalexpenses").child(uniqueKey).removeValue()
         iAddExpenseView.updatedData("Deleted Data")
+    }
+
+    override fun fetchFriendsFirebase(iCreateGroupView: ICreateGroupView, user: String?) {
+        val friendList: MutableList<FriendBalance> = mutableListOf()
+
+        val friendListReference =
+            FirebaseDatabase.getInstance().reference.child("root").child("users").child(user.toString())
+                .child("friends")
+
+        val friendListListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val children = dataSnapshot.children
+                friendList.clear()
+                children.forEach {
+                    val list = it.getValue(FriendBalance::class.java)
+                    if (list != null) {
+                        friendList.add(list)
+                    }
+                }
+                iCreateGroupView.setFriendList(friendList)
+            }
+            override fun onCancelled(databaseError: DatabaseError) {}
+        }
+        friendListReference.addValueEventListener(friendListListener)
     }
 }

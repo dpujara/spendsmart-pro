@@ -47,7 +47,8 @@
                     android:inputType="text"
                     android:textSize="@dimen/_12sdp"
                     android:id="@+id/edittext_username_login"
-                    android:maxLines="1" />
+                    android:importantForAutofill="no"
+                    android:maxLines="1" tools:targetApi="o"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout

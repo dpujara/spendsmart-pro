@@ -69,6 +69,19 @@
     <string name="msg_token_fmt">Message Token Fragment</string>
     <string name="msg_subscribed">msg_subscribed</string>
     <string name="msg_subscribe_failed">msg_subscribe_failed</string>
+    <string name="edit_expense">Edit Expense</string>
+    <string name="create_group">Create a Group</string>
+    <string name="save">Save</string>
+    <string name="enter_a_group_name">Enter a group name</string>
+    <string name="apartment">Apartment</string>
+    <string name="house">House</string>
+    <string name="others">Others</string>
+    <string name="trip">Trip</string>
+    <string name="group_members">Group Members</string>
+    <string name="add_people_to_group">Add People to group</string>
+    <string name="add_person_to_group">Add person to group</string>
+    <string name="group_user_image">Group user image</string>
+    <string name="friendlist">Friendlist</string>
     <string-array name="expense_array">
         <item>Expense</item>
         <item>Income</item>

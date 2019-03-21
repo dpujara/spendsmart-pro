@@ -8,9 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.pujara.dhaval.spendsmart.NavigationHost
 
 import com.pujara.dhaval.spendsmart.R
-import kotlinx.android.synthetic.main.activity_dashboard.*
+import com.pujara.dhaval.spendsmart.dashboard.DashboardActivity
 
 class GroupExpense : Fragment() {
     private var fabBtn: FloatingActionButton? = null
@@ -18,7 +19,6 @@ class GroupExpense : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
 
         val view = inflater.inflate(R.layout.fragment_group_expense, container, false)
         fabBtn = view.findViewById(R.id.fabBtn)
@@ -36,8 +36,15 @@ class GroupExpense : Fragment() {
             }
         }
     }
-
-    fun demo(){
-        Log.d("fab", "group")
+    fun createGroup(dashboardActivity: DashboardActivity){
+        (dashboardActivity as NavigationHost).navigateTo(
+            FullScreenDialogGroup(),
+            true,
+            true,
+            R.anim.slide_in_bottom,
+            R.anim.fade_out,
+            0,
+            0
+        )
     }
 }

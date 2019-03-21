@@ -16,15 +16,12 @@ public class MonthAdapterJava extends RecyclerView.Adapter<MonthAdapterJava.View
     private OnMonthSelectedListerner onMonthSelectedListerner;
     private Context context;
     private ArrayList<String> monthSelected,selected;
-    private int selectedPos = RecyclerView.NO_POSITION;
     @NonNull
     @Override
     public MonthAdapterJava.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_months, parent, false);
         return new ViewHolder(view, onMonthSelectedListerner);
     }
-
-    private static final String TAG = "RecyclerView";
 
     public MonthAdapterJava(ArrayList<String> mData, Context context, OnMonthSelectedListerner onMonthSelectedListerner) {
         this.onMonthSelectedListerner = onMonthSelectedListerner;

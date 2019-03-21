@@ -1,9 +1,6 @@
 package com.pujara.dhaval.spendsmart.dashboard.interactor
 
-import com.pujara.dhaval.spendsmart.dashboard.view.IAddExpenseView
-import com.pujara.dhaval.spendsmart.dashboard.view.IAddFriendView
-import com.pujara.dhaval.spendsmart.dashboard.view.IFriendListView
-import com.pujara.dhaval.spendsmart.dashboard.view.IPersonalExpenseView
+import com.pujara.dhaval.spendsmart.dashboard.view.*
 
 interface IDashboardInteractor {
     fun fetchFriendsFirebase(
@@ -30,4 +27,5 @@ interface IDashboardInteractor {
     fun fetchPersonalExpenseFirebase(iPersonalExpenseView: IPersonalExpenseView, user: String?)
     fun UpdatePersonalExpenseFirebase(iAddExpenseView: IAddExpenseView, uniqueKey: String, descr: String, amount: String, date: String, expense: String, user: String?)
     fun deletePersonalExpenseFirebase(iAddExpenseView: IAddExpenseView, uniqueKey: String, user: String?)
+    fun fetchFriendsFirebase(iCreateGroupView: ICreateGroupView, user: String?)
 }

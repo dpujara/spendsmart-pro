@@ -24,7 +24,6 @@ import com.pujara.dhaval.spendsmart.NavigationHost
 import com.pujara.dhaval.spendsmart.R
 import com.pujara.dhaval.spendsmart.dashboard.adapter.CustompagerAdapter
 import com.pujara.dhaval.spendsmart.dashboard.fragment.FriendList
-import com.pujara.dhaval.spendsmart.dashboard.fragment.FullScreenDialogPersonal
 import com.pujara.dhaval.spendsmart.dashboard.fragment.GroupExpense
 import com.pujara.dhaval.spendsmart.dashboard.fragment.PersonalExpense
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -45,6 +44,7 @@ class DashboardActivity : AppCompatActivity(), NavigationHost, ButtonChangeVisib
     var pagerAdapter: CustompagerAdapter? = null
     var fabstate: Int = 0
 
+    @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(com.pujara.dhaval.spendsmart.R.layout.activity_dashboard)
@@ -82,7 +82,7 @@ class DashboardActivity : AppCompatActivity(), NavigationHost, ButtonChangeVisib
                 friendList.addFriends(this)
             } else if (fabstate == 2) {
                 val groupExpense = GroupExpense()
-                groupExpense.demo()
+                groupExpense.createGroup(this)
             }
         }
 
