@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.pujara.dhaval.spendsmart.R
+import com.pujara.dhaval.spendsmart.dashboard.ButtonChangeVisibility
 import com.pujara.dhaval.spendsmart.dashboard.presenter.dialog.AddFriendPresenter
 import com.pujara.dhaval.spendsmart.dashboard.presenter.dialog.IAddFriendPresenter
 import com.pujara.dhaval.spendsmart.dashboard.view.IAddFriendView
@@ -46,6 +47,7 @@ class FullscreenDialog : DialogFragment(), IAddFriendView {
         addFriendPresenter = AddFriendPresenter(this)
 
         rootView.button_close.setOnClickListener {
+            fullScreenDialogPersonal.updateVisibility()
             view?.let { hideSoftKeyboard(it) }
             fragmentManager?.popBackStack()
         }
@@ -84,7 +86,6 @@ class FullscreenDialog : DialogFragment(), IAddFriendView {
                             for (childPostSnapshot: DataSnapshot in postSnapshot.children) {
                                 if (childPostSnapshot.key == "name") {
                                     val name = childPostSnapshot.value.toString()
-                                    d("cvhgdcv",name)
                                     addFriendPresenter.addFriend(email,user,name)
                                 }
                             }
@@ -108,5 +109,14 @@ class FullscreenDialog : DialogFragment(), IAddFriendView {
     private fun hideSoftKeyboard(view: View) {
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        fullScreenDialogPersonal = activity as ButtonChangeVisibility
+    }
+
+    private lateinit var fullScreenDialogPersonal: ButtonChangeVisibility
+    companion object {
+        fun newInstance() = FullScreenDialogPersonal()
     }
 }

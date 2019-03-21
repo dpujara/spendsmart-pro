@@ -30,6 +30,7 @@ import kotlinx.android.synthetic.main.full_screen_dialog_personal_expense_body.*
 import kotlinx.android.synthetic.main.full_screen_dialog_personal_expense_body.view.*
 import java.util.*
 import android.support.v7.app.AlertDialog
+import com.pujara.dhaval.spendsmart.dashboard.ButtonChangeVisibility
 
 
 class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
@@ -66,6 +67,7 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
 
         addExpensePresenter = AddExpensePresenter(this)
         rootView.button_close_personal_expense.setOnClickListener {
+            fullScreenDialogPersonal.updateVisibility()
             view?.let { hideSoftKeyboard(it) }
             fragmentManager?.popBackStack()
             dismiss()
@@ -109,15 +111,15 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
         }
 
         rootView?.button_action_personal_expense?.setOnClickListener {
-
-
             if(edit == "Yes"){
+                fullScreenDialogPersonal.updateVisibility()
                 addExpensePresenter.updateExpenseData(
                     uniqueKey,
                     view?.edittext_descr_fullscreen_dialog_personal?.text.toString(),
                     view?.edittext_amount_fullscreen_dialog_personal?.text.toString(), view?.dateTextview?.text.toString(),
                     view?.spinner?.selectedItem.toString(), user
                 )
+
             }else{
                 d("clicked no", edit)
                 addExpensePresenter.insertExpenseData(
@@ -136,6 +138,7 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
                     .setMessage("Are you sure you want to delete this entry?")
 
                     .setPositiveButton(android.R.string.yes) { dialog, which ->
+                        fullScreenDialogPersonal.updateVisibility()
                         addExpensePresenter.deleteData(uniqueKey,user)
                     }
                     .setNegativeButton(android.R.string.no, null)
@@ -188,5 +191,15 @@ class FullScreenDialogPersonal : DialogFragment(), IAddExpenseView {
     private fun hideSoftKeyboard(view: View) {
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        fullScreenDialogPersonal = activity as ButtonChangeVisibility
+    }
+
+    private lateinit var fullScreenDialogPersonal: ButtonChangeVisibility
+    companion object {
+        fun newInstance() = FullScreenDialogPersonal()
     }
 }

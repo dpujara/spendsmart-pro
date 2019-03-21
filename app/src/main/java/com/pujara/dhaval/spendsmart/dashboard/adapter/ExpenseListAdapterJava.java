@@ -18,12 +18,14 @@ import java.util.ArrayList;
 public class ExpenseListAdapterJava extends RecyclerView.Adapter<ExpenseListAdapterJava.ViewHolder> {
     private onNoteListerner monNoteListener;
     private Context context;
+
     @NonNull
     @Override
     public ExpenseListAdapterJava.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_personal_expense,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_personal_expense, parent, false);
         return new ViewHolder(view, monNoteListener);
     }
+
     private static final String TAG = "RecyclerView";
     private ArrayList<PersonalExpenseData> exampleList;
 
@@ -38,10 +40,10 @@ public class ExpenseListAdapterJava extends RecyclerView.Adapter<ExpenseListAdap
     @Override
     public void onBindViewHolder(@NonNull ExpenseListAdapterJava.ViewHolder viewHolder, int i) {
         viewHolder.descr.setText(exampleList.get(i).getDescription());
-        viewHolder.amount.setText(exampleList.get(i).getAmount());
-        if(exampleList.get(i).getExpense().equals("Expense")){
+        viewHolder.amount.setText("$" + exampleList.get(i).getAmount());
+        if (exampleList.get(i).getExpense().equals("Expense")) {
             viewHolder.amount.setTextColor(ContextCompat.getColor(context, R.color.red));
-        }else{
+        } else {
             viewHolder.amount.setTextColor(ContextCompat.getColor(context, R.color.colorSecondaryLight));
         }
         viewHolder.date.setText(exampleList.get(i).getMonth() + "/" + exampleList.get(i).getDay() + "/" + exampleList.get(i).getYear());
@@ -52,11 +54,12 @@ public class ExpenseListAdapterJava extends RecyclerView.Adapter<ExpenseListAdap
         return exampleList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView date,descr,amount;
+        TextView date, descr, amount;
 
         onNoteListerner onNoteListerner;
+
         ViewHolder(@NonNull View itemView, onNoteListerner onNoteListerner) {
             super(itemView);
             date = itemView.findViewById(R.id.date_personal_expense);
@@ -72,7 +75,7 @@ public class ExpenseListAdapterJava extends RecyclerView.Adapter<ExpenseListAdap
         }
     }
 
-    public interface onNoteListerner{
+    public interface onNoteListerner {
         void onNoteClick(int position);
     }
 }

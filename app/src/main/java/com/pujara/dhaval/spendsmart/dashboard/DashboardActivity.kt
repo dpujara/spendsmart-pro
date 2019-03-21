@@ -1,5 +1,6 @@
 package com.pujara.dhaval.spendsmart.dashboard
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -18,22 +19,27 @@ import android.util.Log
 import android.util.Log.d
 import android.view.View
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
+import com.pujara.dhaval.spendsmart.NavigationHost
 import com.pujara.dhaval.spendsmart.R
 import com.pujara.dhaval.spendsmart.dashboard.adapter.CustompagerAdapter
 import com.pujara.dhaval.spendsmart.dashboard.fragment.FriendList
+import com.pujara.dhaval.spendsmart.dashboard.fragment.FullScreenDialogPersonal
 import com.pujara.dhaval.spendsmart.dashboard.fragment.GroupExpense
 import com.pujara.dhaval.spendsmart.dashboard.fragment.PersonalExpense
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import com.pujara.dhaval.spendsmart.NavigationHost
 
 
-class DashboardActivity : AppCompatActivity(), NavigationHost {
+class DashboardActivity : AppCompatActivity(), NavigationHost, ButtonChangeVisibility {
+    @SuppressLint("RestrictedApi")
+    override fun updateVisibility() {
+        fabBtn.visibility = View.VISIBLE
+    }
+
+
     override fun newActivity(dashboardActivity: Activity) {}
-
     override fun backPressed() {}
+
     private var notificationManager: NotificationManager? = null
     private lateinit var drawer: DrawerLayout
     var pagerAdapter: CustompagerAdapter? = null
@@ -41,10 +47,10 @@ class DashboardActivity : AppCompatActivity(), NavigationHost {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
+        setContentView(com.pujara.dhaval.spendsmart.R.layout.activity_dashboard)
 
         //Navigation Drawer
-        val toolbar: Toolbar = findViewById(R.id.toolbar_drawer)
+        val toolbar: Toolbar = findViewById(com.pujara.dhaval.spendsmart.R.id.toolbar_drawer)
         setSupportActionBar(toolbar)
         drawer = findViewById(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
@@ -67,6 +73,7 @@ class DashboardActivity : AppCompatActivity(), NavigationHost {
 
 
         fabBtn.setOnClickListener {
+            fabBtn.visibility = View.INVISIBLE
             if (fabstate == 0) {
                 val persoanlFragment = PersonalExpense()
                 persoanlFragment.addExpense(this)

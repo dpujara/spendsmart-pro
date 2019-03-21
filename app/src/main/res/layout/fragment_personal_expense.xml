@@ -63,21 +63,28 @@
                 android:textSize="@dimen/_18sdp"
                 app:layout_constraintEnd_toEndOf="@+id/textViewPersonalIncome"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
-                app:layout_constraintTop_toBottomOf="@+id/textViewPersonalIncome" android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/textViewPersonalIncome" android:layout_marginBottom="24dp"
                 app:layout_constraintBottom_toBottomOf="parent"/>
         <android.support.constraint.Guideline android:layout_width="wrap_content" android:layout_height="wrap_content"
                                               android:id="@+id/guideline" app:layout_constraintGuide_percent="0.5"
                                               android:orientation="vertical"/>
     </android.support.constraint.ConstraintLayout>
-
+    <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+              android:id="@+id/listView_horizontal"
+              android:orientation="horizontal"
+              android:layout_height="wrap_content" tools:ignore="NestedScrolling" android:layout_marginTop="8dp"
+              app:layout_constraintTop_toBottomOf="@+id/constraintLayoutPersonal"
+    />
     <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_personal_expense"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutPersonal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/listView_horizontal">
     </android.support.v7.widget.RecyclerView>
 </android.support.constraint.ConstraintLayout>
